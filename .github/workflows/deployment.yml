@@ -47,4 +47,4 @@ jobs:
         run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.codewithross.app && git pull'
 
       - name: Composer Install
-        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.codewithross.app && /opt/alt/php84/usr/bin/php ./composer.phar install --no-dev --prefer-dist --no-ansi --no-interaction --no-progress; || exit 1'
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.codewithross.app && /opt/alt/php84/usr/bin/php ./composer.phar install --no-dev --prefer-dist --no-ansi --no-interaction --no-progress || exit 1'
