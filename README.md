@@ -10,7 +10,8 @@
 
 ## Requirements
 
-- PHP v8.2
+- PHP v8.4
+- Laravel v12
 - Web Server (HTTPS)
 
 ## Setup
