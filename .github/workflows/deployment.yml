@@ -37,6 +37,9 @@ jobs:
       - name: Git Fetch
         run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.codewithross.app && git fetch'
 
+      - name: Git Checkout
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.codewithross.app && git checkout main'
+
       - name: Git Reset
         run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.codewithross.app && git reset --hard'
 
