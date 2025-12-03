@@ -1,0 +1,50 @@
+name: Deployment
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual deploy'
+        required: false
+        default: 'manual trigger'
+
+concurrency: main
+
+env:
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  SSH_PORT: ${{ secrets.SSH_PORT }}
+  SSH_USER: ${{ secrets.SSH_USER }}
+  SSH_IP: ${{ secrets.SSH_IP }}
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf "%s" "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
+
+          # Populate known_hosts automatically
+          ssh-keyscan -p "${SSH_PORT}" -H "${SSH_IP}" >> ~/.ssh/known_hosts 2>/dev/null
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Git Fetch
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.edlin.app && git fetch'
+
+      - name: Git Pull
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.edlin.app && git pull'
+
+      - name: Git Reset
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.edlin.app && git reset --hard'
+
+      - name: Git Pull
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.edlin.app && git pull'
+
+      - name: Composer Install
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/braintree-laravel.edlin.app && composer install || exit 1'
