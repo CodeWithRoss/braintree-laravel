@@ -7,7 +7,8 @@ on:
 jobs:
     tests:
         runs-on: ubuntu-latest
-        container: rossedlin/php-apache:8.2
+        name: Unit & Feature Tests
+        container: rossedlin/php-apache:8.4
         steps:
           - uses: actions/checkout@v3
 
