@@ -19,7 +19,6 @@ class BraintreeController extends Controller
         $result = $gateway->transaction()->sale([
             'amount'             => '10.00',
             'paymentMethodNonce' => $nonce,
-            //'deviceData'         => $deviceDataFromTheClient,
             'options'            => [
                 'submitForSettlement' => True,
             ],
