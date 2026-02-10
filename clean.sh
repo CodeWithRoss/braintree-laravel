@@ -12,7 +12,6 @@ docker volume prune -f
 #
 rm -Rf node_modules
 rm -Rf vendor
-rm -f composer.lock
 rm -f .cache_ggshield
 rm -f .phpunit.result.cache
 rm -f ./database/database.sqlite
